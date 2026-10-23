@@ -1,0 +1,197 @@
+import Image from "next/image";
+import type { Metadata } from "next";
+import Link from "next/link";
+import { notFound } from "next/navigation";
+import { ArrowUpRight, Check, ChevronLeft } from "lucide-react";
+import { categoryLabels, getAdjacentProject, getProject, projects } from "@/content/projects";
+import { PageShell } from "@/components/layout/PageShell";
+import { RevealText } from "@/components/motion/RevealText";
+import { FadeIn } from "@/components/motion/FadeIn";
+import { Aurora } from "@/components/ui/Aurora";
+import { Button } from "@/components/ui/Button";
+import { Chip, SampleBadge } from "@/components/ui/Chip";
+import { ArtStage, ProjectArt } from "@/components/work/ProjectArt";
+import { partMeta } from "@/components/work/parts";
+import { Tilt } from "@/components/motion/Tilt";
+import { LiveAccounts } from "@/components/social/LiveAccounts";
+import { igAccounts } from "@/lib/instagram";
+
+export function generateStaticParams() {
+  return projects.map((p) => ({ slug: p.slug }));
+}
+
+export async function generateMetadata({ params }: PageProps<"/work/[slug]">): Promise<Metadata> {
+  const { slug } = await params;
+  const project = getProject(slug);
+  if (!project) return {};
+  return {
+    title: project.name,
+    description: project.summary,
+    alternates: { canonical: `/work/${project.slug}` },
+    openGraph: { title: project.name, description: project.summary },
+  };
+}
+
+export default async function CaseStudyPage({ params }: PageProps<"/work/[slug]">) {
+  const { slug } = await params;
+  const project = getProject(slug);
+  if (!project) notFound();
+  const next = getAdjacentProject(slug);
+  const links = project.links.filter((l): l is { label: string; href: string } => l.href !== null);
+  const accounts = igAccounts(project.links);
+
+  return (
+    <PageShell>
+      <article>
+        <header className="relative overflow-clip pb-12 pt-[calc(var(--nav-h)+3rem)] text-center lg:pt-[calc(var(--nav-h)+5rem)]">
+          <Aurora subtle />
+          <div className="container-page relative">
+            <Link href="/work" className="mx-auto flex w-fit items-center gap-1 text-[15px] font-medium text-link hover:underline">
+              <ChevronLeft aria-hidden className="size-4" /> All work
+            </Link>
+            {project.logo && (
+              <span className="mx-auto mt-8 grid size-20 place-items-center overflow-hidden rounded-[22px] bg-white shadow-[var(--shadow)] ring-1 ring-line">
+                <Image src={project.logo.src} alt={project.logo.alt} width={80} height={80} className="size-full object-contain" priority />
+              </span>
+            )}
+            <p className={`eyebrow mark ${project.logo ? "mt-6" : "mt-8"}`}>
+              {project.kind === "work" ? project.org : "Personal project"} · {categoryLabels[project.category]} · {project.year}
+            </p>
+            <RevealText as="h1" immediate className="headline mx-auto mt-3 max-w-4xl text-[clamp(2.75rem,8vw,6.5rem)]">
+              {project.name}
+            </RevealText>
+            <p className="mx-auto mt-5 max-w-xl text-[clamp(1.125rem,2vw,1.375rem)] text-muted">{project.summary}</p>
+            {project.placeholder && <SampleBadge className="mt-4" />}
+            <div className="mt-8 flex flex-wrap justify-center gap-2">
+              {project.stack.map((s) => (
+                <Chip key={s}>{s}</Chip>
+              ))}
+            </div>
+            {links.length > 0 && (
+              <div className="mt-8 flex flex-wrap justify-center gap-3">
+                {links.map((l, i) => (
+                  <Button key={l.href} href={l.href} variant={i === 0 ? "primary" : "secondary"}>
+                    {l.label} <ArrowUpRight aria-hidden className="size-4" />
+                  </Button>
+                ))}
+              </div>
+            )}
+          </div>
+        </header>
+
+        <section className="container-page">
+          <ArtStage project={project} className="aspect-auto px-6 py-12 sm:px-16 sm:py-20">
+            <Tilt max={4} className="mx-auto max-w-4xl">
+              <ProjectArt project={project} priority />
+            </Tilt>
+          </ArtStage>
+        </section>
+
+        {accounts.length > 0 && (
+          <section aria-labelledby="live-title" className="pt-20 lg:pt-28">
+            <div className="container-page text-center">
+              <p className="eyebrow mark">Live from Instagram</p>
+              <h2 id="live-title" className="headline mt-3 text-[clamp(2rem,4.5vw,3.5rem)]">
+                See the feeds, <span className="serif ig-text pr-[0.05em]">live.</span>
+              </h2>
+            </div>
+            <div className="mt-8">
+              <LiveAccounts accounts={accounts} />
+            </div>
+          </section>
+        )}
+
+        {project.parts && project.parts.length > 0 && (
+          <section aria-labelledby="built-title" className="container-page pt-20 lg:pt-28">
+            <h2 id="built-title" className="headline text-center text-[clamp(2rem,4.5vw,3.5rem)]">
+              What I <span className="mark">built.</span>
+            </h2>
+            <FadeIn stagger className={`mx-auto mt-10 grid max-w-5xl gap-4 sm:grid-cols-2 ${project.parts.length >= 4 ? "lg:grid-cols-4" : project.parts.length === 3 ? "lg:grid-cols-3" : ""}`}>
+              {project.parts.map((part) => {
+                const { icon: Icon, name } = partMeta[part.kind];
+                return (
+                  <div key={part.label} className="card group/part p-7 transition-colors duration-500 hover:bg-volt hover:text-ink">
+                    <span className="grid size-12 place-items-center rounded-2xl bg-bg text-fg transition-colors duration-500 group-hover/part:bg-ink group-hover/part:text-volt">
+                      <Icon aria-hidden className="size-5" />
+                    </span>
+                    <p className="mt-6 text-[13px] font-semibold text-muted transition-colors group-hover/part:text-ink/60">{name}</p>
+                    <h3 className="headline mt-1 text-[1.6rem]">{part.label}</h3>
+                    <p className="mt-2 text-[15px] text-muted transition-colors group-hover/part:text-ink/70">{part.stack}</p>
+                  </div>
+                );
+              })}
+            </FadeIn>
+          </section>
+        )}
+
+        <section className="container-page py-20 lg:py-28">
+          <FadeIn className="mx-auto max-w-3xl text-center">
+            <p className="eyebrow mark">The problem</p>
+            <p className="headline mt-4 text-[clamp(1.75rem,3.6vw,2.75rem)]">{project.problem}</p>
+          </FadeIn>
+
+          <FadeIn stagger className="mt-20 grid gap-4 md:grid-cols-2">
+            <div className="card p-8">
+              <p className="text-[13px] font-semibold text-muted">My role</p>
+              <h2 className="headline mt-2 text-[1.75rem]">{project.role}</h2>
+              <ul className="mt-6 space-y-3">
+                {project.contributions.map((c) => (
+                  <li key={c} className="flex gap-3 text-[16px]">
+                    <span className="mt-0.5 grid size-5 shrink-0 place-items-center rounded-full ig-gradient text-white">
+                      <Check aria-hidden className="size-3" strokeWidth={3} />
+                    </span>
+                    {c}
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div className="card p-8">
+              <p className="text-[13px] font-semibold text-muted">How it&rsquo;s built</p>
+              <dl className="mt-4 divide-y divide-line">
+                {project.architecture.map((a) => (
+                  <div key={a.layer} className="py-4">
+                    <dt className="text-[17px] font-semibold">{a.layer}</dt>
+                    <dd className="mt-1 text-[15px] text-muted">{a.detail}</dd>
+                  </div>
+                ))}
+              </dl>
+            </div>
+          </FadeIn>
+
+          <FadeIn stagger className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {project.challenges.map((c) => (
+              <div key={c.title} className="card p-8">
+                <p className="text-[13px] font-semibold text-muted">Challenge</p>
+                <h3 className="headline mt-2 text-[1.5rem]">{c.title}</h3>
+                <p className="mt-2 text-[15px] text-muted">{c.detail}</p>
+              </div>
+            ))}
+          </FadeIn>
+
+          {project.results.length > 0 && (
+            <FadeIn className="card mt-4 p-8">
+              <p className="text-[13px] font-semibold text-muted">Results</p>
+              <ul className="mt-3 space-y-2 text-[17px]">
+                {project.results.map((r) => (
+                  <li key={r}>{r}</li>
+                ))}
+              </ul>
+            </FadeIn>
+          )}
+        </section>
+
+        <section className="container-page pb-24 lg:pb-32">
+          <Link href={`/work/${next.slug}`} className="group card flex items-center justify-between gap-6 p-8 sm:p-10">
+            <div>
+              <p className="text-[13px] font-semibold text-muted">Next project</p>
+              <p className="headline mt-2 text-[clamp(2rem,4vw,3rem)]">{next.name}</p>
+            </div>
+            <span className="grid size-14 shrink-0 place-items-center rounded-full bg-fg text-bg transition-transform duration-500 group-hover:rotate-45">
+              <ArrowUpRight aria-hidden className="size-6" />
+            </span>
+          </Link>
+        </section>
+      </article>
+    </PageShell>
+  );
+}
