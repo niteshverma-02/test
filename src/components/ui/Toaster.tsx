@@ -17,7 +17,7 @@ export function Toaster() {
             animate={{ y: 0, opacity: 1, scale: 1, filter: "blur(0px)" }}
             exit={{ y: 20, opacity: 0, scale: 0.95, filter: "blur(6px)" }}
             transition={{ type: "spring", stiffness: 420, damping: 32 }}
-            className="flex items-center gap-2 rounded-full ig-gradient px-5 py-3 text-[14px] font-semibold text-ink shadow-[var(--shadow)] ring-1 ring-ink/10"
+            className="flex items-center gap-2 rounded-none bg-ember px-5 py-3 font-mono text-[12px] uppercase tracking-wider text-white shadow-[var(--shadow)] ring-1 ring-ink/10"
           >
             <Sparkles aria-hidden className="size-4" />
             {t.message}

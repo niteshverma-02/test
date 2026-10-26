@@ -16,21 +16,21 @@ export default function OpengraphImage() {
           flexDirection: "column",
           justifyContent: "space-between",
           padding: 72,
-          background: "#0d0710",
-          color: "#fdf0f5",
+          background: "#0a1020",
+          color: "#f5f1ea",
         }}
       >
         <div style={{ display: "flex", alignItems: "center", gap: 16, fontSize: 28 }}>
-          <div style={{ width: 18, height: 18, borderRadius: 9999, background: "#ff6b9d" }} />
+          <div style={{ width: 18, height: 18, background: "#ff7a59" }} />
           {profile.availability.label}
         </div>
         <div style={{ display: "flex", flexDirection: "column" }}>
-          <div style={{ fontSize: 132, fontWeight: 800, letterSpacing: -6, lineHeight: 0.95, textTransform: "uppercase" }}>{`${profile.identity.name}.`}</div>
+          <div style={{ fontSize: 132, fontWeight: 900, letterSpacing: -4, lineHeight: 0.9, textTransform: "uppercase" }}>{`${profile.identity.name}.`}</div>
           <div style={{ display: "flex", marginTop: 28, fontSize: 56, fontWeight: 700, letterSpacing: -2 }}>
-            <div style={{ display: "flex", background: "#ff6b9d", color: "#ffffff", padding: "0 18px", borderRadius: 8 }}>{profile.tagline}</div>
+            <div style={{ display: "flex", background: "#ff7a59", color: "#ffffff", padding: "0 18px" }}>{profile.tagline}</div>
           </div>
         </div>
-        <div style={{ fontSize: 28, color: "#c49ab0" }}>{`${profile.role} · Strategy · Content · Branding`}</div>
+        <div style={{ fontSize: 28, color: "#a9b1c6" }}>{`${profile.role} · SEO · AEO · GEO`}</div>
       </div>
     ),
     size,

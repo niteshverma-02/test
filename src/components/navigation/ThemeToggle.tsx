@@ -25,7 +25,7 @@ export function ThemeToggle({ className }: { className?: string }) {
       aria-label={`Switch to ${next} mode`}
       title={`Switch to ${next} mode`}
       className={cn(
-        "relative grid size-9 place-items-center overflow-hidden rounded-full text-fg transition-colors duration-300 hover:bg-surface-2",
+        "relative grid size-9 place-items-center overflow-hidden rounded-none text-fg transition-colors duration-300 hover:bg-surface-2",
         className,
       )}
     >

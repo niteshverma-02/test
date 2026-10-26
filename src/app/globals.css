@@ -1,40 +1,29 @@
 @import "tailwindcss";
 
 /* ------------------------------------------------------------------
-   Design tokens — clean, Apple-style.
-   UI colours are semantic and flip with <html data-mode>. A fixed
-   palette (paper / ink / signal …) is kept for illustrations, which
-   behave like screenshots and look the same in both modes.
+   "Visibility Report" — an SEO analyst's printed report.
+   Bone paper and ink, square corners, hairline rules, poster type.
+   One colour per engine, used the same way everywhere:
+     SEO = cobalt (Google rankings)
+     AEO = vermilion (AI answers)
+     GEO = saffron (generative engines, maps & citations)
    ------------------------------------------------------------------ */
 @theme {
-  /* Signature colour — rose coral, warm and social. */
-  --color-volt: #ff6b9d;
-  --color-ink: #1a0a12;
-
-  --color-paper: #fff7f9;
-  --color-paper-2: #fce8ef;
-  --color-charcoal: #2d1a24;
-  --color-graphite: #3d2030;
-  --color-stone: #7a5566;
-  --color-ash: #a87f90;
-  --color-signal: #ff6b9d;
-  --color-danger: #e5484d;
-
-  /* Extended palette for social media feel */
-  --color-coral: #ff6b9d;
-  --color-peach: #ffb347;
-  --color-mauve: #c084fc;
-  --color-rose: #fb7185;
-  --color-blush: #fda4af;
+  /* Fixed colours: ink, paper and the ember accent look the same in both modes. */
+  --color-ink: #0a1020;
+  --color-bone: #f5f1ea;
+  --color-danger: #ff4d2e;
 
   --breakpoint-xs: 25rem;
-  --breakpoint-3xl: 120rem;
 
   --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-quart: cubic-bezier(0.76, 0, 0.24, 1);
-  --ease-apple: cubic-bezier(0.28, 0.11, 0.32, 1);
 }
 
+/* ------------------------------------------------------------------
+   Palette — deep navy, coral and cream: an editorial, magazine feel.
+   One colour per engine: SEO = coral, AEO = sky, GEO = gold.
+   ------------------------------------------------------------------ */
 @theme inline {
   --color-bg: var(--bg);
   --color-surface: var(--surface);
@@ -44,45 +33,61 @@
   --color-subtle: var(--subtle);
   --color-line: var(--line);
   --color-link: var(--link);
-  /* Readable accent for text and icons: deep moss on light, volt on dark. */
   --color-accent: var(--accent);
+  --color-on-accent: var(--on-accent);
+  --color-ember: var(--ember);
+  --color-seo: var(--seo);
+  --color-aeo: var(--aeo);
+  --color-geo: var(--geo);
 
-  --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
-  --font-display: var(--font-bricolage), var(--font-inter), ui-sans-serif, system-ui, sans-serif;
-  --font-serif: var(--font-serif-accent), ui-serif, Georgia, serif;
-  --font-mono: var(--font-jetbrains), ui-monospace, SFMono-Regular, Menlo, monospace;
+  --font-sans: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
+  --font-hand: var(--font-caveat), "Comic Sans MS", cursive;
 }
 
-:root {
-  --bg: #f8fafc;
-  --surface: #ffffff;
-  --surface-2: #f1f5f9;
-  --fg: #0f172a;
-  --muted: #475569;
-  --subtle: #64748b;
-  --line: rgba(148, 163, 184, 0.22);
-  --link: #2563eb;
-  --accent: #2563eb;
-  --glass: rgba(248, 250, 252, 0.88);
-  --shadow: 0 30px 60px -25px rgba(37, 99, 235, 0.15);
-  --gutter: clamp(1.25rem, 4vw, 3rem);
-  --nav-h: 3.25rem;
-  color-scheme: light;
-}
-
+/* Dark (navy) is the default; light (cream) is opt-in (see mode-script). */
+:root,
 html[data-mode="dark"] {
-  --bg: #090d16;
-  --surface: #0f172a;
-  --surface-2: #1e293b;
-  --fg: #f8fafc;
-  --muted: #94a3b8;
-  --subtle: #64748b;
-  --line: rgba(255, 255, 255, 0.10);
-  --link: #38bdf8;
-  --accent: #38bdf8;
-  --glass: rgba(9, 13, 22, 0.85);
-  --shadow: 0 40px 80px -40px rgba(56, 189, 248, 0.25);
+  --bg: #0a1020;
+  --surface: #121a2e;
+  --surface-2: #1a2440;
+  --fg: #f5f1ea;
+  --muted: #a9b1c6;
+  --subtle: #6e7894;
+  --line: rgba(245, 241, 234, 0.1);
+  --link: #ff8f72;
+  --accent: #ff7a59;
+  --on-accent: #0a1020;
+  --ember: #ff7a59;
+  --seo: #ff7a59;
+  --aeo: #7fb7ff;
+  --geo: #f2c879;
+  --glow: rgba(255, 122, 89, 0.18);
+  --glow-2: rgba(127, 183, 255, 0.14);
+  --gutter: clamp(1.25rem, 4vw, 3rem);
+  --nav-h: 5rem;
   color-scheme: dark;
+}
+
+html[data-mode="light"] {
+  --bg: #f5f1ea;
+  --surface: #fffcf7;
+  --surface-2: #ebe5da;
+  --fg: #0a1020;
+  --muted: #4a5470;
+  --subtle: #7a8299;
+  --line: rgba(10, 16, 32, 0.12);
+  --link: #d9502f;
+  --accent: #e85a3a;
+  --on-accent: #ffffff;
+  --ember: #e85a3a;
+  --seo: #e85a3a;
+  --aeo: #2f6fd0;
+  --geo: #b8862f;
+  --glow: rgba(232, 90, 58, 0.14);
+  --glow-2: rgba(47, 111, 208, 0.1);
+  color-scheme: light;
 }
 
 /* Tailwind's motion variants follow the site's switch, not the raw media query. */
@@ -95,21 +100,16 @@ html[data-mode="dark"] {
 
 @utility container-page {
   width: 100%;
-  max-width: 80rem;
+  max-width: 88rem;
   margin-inline: auto;
   padding-inline: var(--gutter);
 }
 
-/* ------------------------------------------------------------------
-   Base
-   ------------------------------------------------------------------ */
 @layer base {
   html {
     overflow-x: clip;
     -webkit-text-size-adjust: 100%;
-    text-size-adjust: 100%;
   }
-
   body {
     min-height: 100svh;
     overflow-x: clip;
@@ -117,36 +117,27 @@ html[data-mode="dark"] {
     color: var(--fg);
     font-family: var(--font-sans);
     font-size: 1.0625rem;
-    line-height: 1.5;
-    letter-spacing: -0.011em;
-    text-rendering: optimizeLegibility;
+    line-height: 1.55;
     -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    transition: background-color 0.4s var(--ease-apple);
+    transition: background-color 0.4s ease;
   }
-
   ::selection {
-    background: var(--color-coral);
-    color: #ffffff;
+    background: var(--ember);
+    color: var(--color-ink);
   }
-
   :focus-visible {
     outline: 2px solid var(--accent);
     outline-offset: 3px;
-    border-radius: 6px;
   }
-
   a,
   button {
     -webkit-tap-highlight-color: transparent;
   }
-
   h1,
   h2,
   h3 {
     text-wrap: balance;
   }
-
   p {
     text-wrap: pretty;
   }
@@ -163,109 +154,145 @@ html.lenis body {
 .lenis [data-lenis-prevent] {
   overscroll-behavior: contain;
 }
-.lenis.lenis-smooth iframe {
-  pointer-events: none;
-}
 
-/* ------------------------------------------------------------------
-   Type
-   ------------------------------------------------------------------ */
 @layer components {
-  /* Poster type: Archivo, a touch expanded. */
-  .headline {
+  /* Display type: Geist semibold, set tight like a magazine cover. */
+  .poster {
     font-family: var(--font-display);
-    font-weight: 700;
-    letter-spacing: -0.04em;
-    line-height: 0.98;
+    font-weight: 600;
+    letter-spacing: -0.055em;
+    line-height: 0.95;
   }
-
-  /* The signature highlight: ink on a solid volt block. */
-  .mark {
-    background: var(--ig);
-    color: #fff;
-    padding-inline: 0.14em;
-    border-radius: 0.1em;
-    -webkit-box-decoration-break: clone;
-    box-decoration-break: clone;
+  /* Hand-written notes in the margins — the human touch. */
+  .hand {
+    font-family: var(--font-hand);
+    font-weight: 500;
+    letter-spacing: 0;
+    line-height: 1.05;
   }
-
-  /* Hollow numerals for big counters and indexes. */
-  .text-outline {
+  /* Small mono labels: "§ 02 — EVIDENCE". */
+  .label {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  /* Hollow poster letters. */
+  .hollow {
     color: transparent;
     -webkit-text-stroke: 1.5px var(--fg);
   }
-
-  /* Italic serif accent inside grotesk headlines: "brands *worth following*". */
-  .serif {
-    font-family: var(--font-serif);
-    font-style: italic;
-    font-weight: 400;
-    letter-spacing: -0.02em;
+  /* Print-grid texture behind heroes: 12 columns, 4 rows of hairlines. */
+  .ruled {
+    background-image:
+      linear-gradient(var(--line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line) 1px, transparent 1px);
+    background-size:
+      100% 25%,
+      8.333% 100%;
   }
-
-  .eyebrow {
-    font-size: 0.9375rem;
-    font-weight: 600;
-    letter-spacing: -0.01em;
-  }
-  .eyebrow.mark {
-    display: inline-block;
-    padding: 0.2em 0.65em;
-    border-radius: 999px;
-    font-size: 0.8125rem;
-  }
-
-  /* Rounded "card" surface used across the site. */
-  .card {
-    position: relative;
-    overflow: hidden;
-    border-radius: 28px;
-    background: var(--surface);
-  }
-
   .line-mask {
     display: block;
     overflow: clip;
-    padding-bottom: 0.08em;
-    margin-bottom: -0.08em;
   }
 }
 
 /* ------------------------------------------------------------------
-   Pre-hydration entrance states. `motion-ok` is set by an inline script
-   only when JS runs and motion is allowed; failsafes reveal everything
-   even if hydration never happens.
+   Surfaces
    ------------------------------------------------------------------ */
-.motion-ok [data-hero-in],
-.motion-ok [data-hero-name] {
-  opacity: 0;
-  animation: failsafe-show 0s linear 4.5s forwards;
+
+/* Ambient light behind every page: slow coral and sky glows over navy, plus a faint dot grid. */
+.ambient {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+  background-image: radial-gradient(color-mix(in oklab, var(--fg) 7%, transparent) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+.ambient::before,
+.ambient::after {
+  content: "";
+  position: absolute;
+  width: 60vmax;
+  height: 60vmax;
+  border-radius: 999px;
+  filter: blur(80px);
+}
+.ambient::before {
+  left: -15vmax;
+  top: -20vmax;
+  background: radial-gradient(closest-side, var(--glow), transparent);
+  animation: drift-a 26s ease-in-out infinite alternate;
+}
+.ambient::after {
+  right: -20vmax;
+  bottom: -25vmax;
+  background: radial-gradient(closest-side, var(--glow-2), transparent);
+  animation: drift-b 32s ease-in-out infinite alternate;
+}
+@keyframes drift-a {
+  to {
+    translate: 30vw 40vh;
+    scale: 1.2;
+  }
+}
+@keyframes drift-b {
+  to {
+    translate: -35vw -30vh;
+    scale: 0.9;
+  }
 }
 
-/* Intro curtain: first visit per session only, never without JS + motion. */
-.intro {
-  display: none;
-}
-.motion-ok:not(.intro-seen) .intro {
-  display: flex;
-  animation: intro-failsafe 0s linear 4.5s forwards;
-}
-@keyframes intro-failsafe {
-  to {
-    visibility: hidden;
+@layer components {
+  /* Glass card: rounded, softly lit, with a spotlight that follows the pointer (see Spotlight.tsx). */
+  .panel {
+    position: relative;
+    isolation: isolate;
+    transform: perspective(1000px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+    overflow: hidden;
+    border-radius: 1.25rem;
+    border: 1px solid var(--line);
+    background: color-mix(in oklab, var(--surface) 72%, transparent);
+    backdrop-filter: blur(14px);
+    transition:
+      border-color 0.5s ease,
+      translate 0.7s var(--ease-expo),
+      transform 0.6s var(--ease-expo),
+      box-shadow 0.7s var(--ease-expo);
   }
-}
-.motion-ok [data-tilt] {
-  transform: rotateX(26deg) scale(0.9) translateY(4%);
-}
-.motion-ok [data-reveal-load] {
-  visibility: hidden;
-  animation: failsafe-visible 0s linear 3s forwards;
-}
-@keyframes failsafe-show {
-  to {
+  .panel::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    opacity: 0;
+    background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 50%), var(--glow), transparent 60%);
+    transition: opacity 0.4s ease;
+  }
+  .panel:hover {
+    border-color: color-mix(in oklab, var(--ember) 40%, transparent);
+    box-shadow: 0 30px 80px -40px var(--glow);
+  }
+  .panel:hover::before {
     opacity: 1;
   }
+  .motion-ok .panel:hover {
+    translate: 0 -4px;
+  }
+}
+
+/* ------------------------------------------------------------------
+   Pre-hydration entrance states. `motion-ok` is set before paint only
+   when JS runs and motion is allowed; failsafes reveal everything.
+   ------------------------------------------------------------------ */
+.motion-ok [data-reveal-load],
+.motion-ok [data-hero-chars] {
+  visibility: hidden;
+  animation: failsafe-visible 0s linear 3s forwards;
 }
 @keyframes failsafe-visible {
   to {
@@ -273,43 +300,378 @@ html.lenis body {
   }
 }
 
+/* Custom cursor (Cursor.tsx) replaces the native one on fine pointers. */
+html.has-cursor,
+html.has-cursor * {
+  cursor: none !important;
+}
+html.has-cursor :is(input, textarea, select) {
+  cursor: text !important;
+}
+
+/* Slow spin for the footer badge. */
+.spin-slow {
+  animation: spin-slow 16s linear infinite;
+}
+@keyframes spin-slow {
+  to {
+    rotate: 360deg;
+  }
+}
+
+/* The footer name: an outline that fills with a coral→gold→sky sweep as it scrolls into view. */
+.fill-name {
+  color: transparent;
+  -webkit-text-stroke: 1.5px color-mix(in oklab, var(--fg) 35%, transparent);
+  background-image: linear-gradient(100deg, var(--ember), var(--geo) 50%, var(--aeo));
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+@supports (animation-timeline: view()) {
+  .motion-ok .fill-name {
+    animation: fill-name linear both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 100%;
+  }
+}
+@keyframes fill-name {
+  from {
+    background-size: 0% 100%;
+  }
+}
+
+/* Letter roll (RollText.tsx): each letter slides up into its copy, one after another. */
+.roll-ch {
+  display: inline-block;
+  transition: transform 0.55s var(--ease-expo);
+  transition-delay: calc(var(--i) * 14ms);
+}
+:is(a, button):is(:hover, :focus-visible) .roll-ch {
+  transform: translateY(-100%);
+}
+
+/* Odometer digits: a column of 0-9 that rolls to its value. */
+.odo-col {
+  display: inline-block;
+  height: 1em;
+  overflow: hidden;
+  line-height: 1;
+}
+.odo-strip {
+  display: block;
+  transition: transform 1.8s cubic-bezier(0.16, 1, 0.3, 1);
+  transition-delay: calc(var(--i) * 90ms);
+}
+
+/* Cards rise and un-blur as they scroll in; big titles drift sideways with the scroll. */
+@supports (animation-timeline: view()) {
+  .motion-ok .panel {
+    animation: panel-in linear both;
+    animation-timeline: view();
+    /* A fixed distance, so cards taller than the screen don't stay blurred while being read. */
+    animation-range: entry 0px entry 260px;
+  }
+
+}
+@keyframes panel-in {
+  from {
+    opacity: 0;
+    filter: blur(8px);
+    translate: 0 48px;
+    scale: 0.96;
+  }
+}
+/* A vertical rail that fills top-to-bottom as its section scrolls through. */
+@supports (animation-timeline: view()) {
+  .motion-ok .fill-y {
+    transform-origin: 50% 0;
+    animation: fill-y linear both;
+    animation-timeline: view();
+    animation-range: cover 10% cover 70%;
+  }
+}
+@keyframes fill-y {
+  from {
+    transform: scaleY(0);
+  }
+}
+@keyframes drift-x {
+  from {
+    translate: 2vw 0;
+  }
+  to {
+    translate: -2vw 0;
+  }
+}
+/* Big titles drift sideways with the scroll — desktop only, where there is room at the edges. */
+@media (min-width: 1024px) {
+  @supports (animation-timeline: view()) {
+    .motion-ok .drift {
+      animation: drift-x linear both;
+      animation-timeline: view();
+      animation-range: cover;
+    }
+  }
+}
+
 /* ------------------------------------------------------------------
-   Hairline grid texture behind page intros
+   Animation kit
    ------------------------------------------------------------------ */
-.grid-lines {
-  background-image:
-    linear-gradient(var(--line) 1px, transparent 1px),
-    linear-gradient(90deg, var(--line) 1px, transparent 1px);
-  background-size: 64px 64px;
-  background-position: center top;
-  mask-image: radial-gradient(ellipse 70% 60% at 50% 0%, #000 30%, transparent 75%);
+
+/* Accent words: a coral → gold → sky gradient with a slow light sweep. */
+.grad-text {
+  background-image: linear-gradient(100deg, var(--ember) 0%, var(--geo) 35%, var(--aeo) 60%, var(--ember) 100%);
+  background-size: 250% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  padding-right: 0.04em;
+  animation: grad-pan 7s ease-in-out infinite alternate;
+}
+@keyframes grad-pan {
+  to {
+    background-position: 100% 0;
+  }
 }
 
-/* Fine film grain over the whole page — keeps flat colour from feeling digital. */
-.grain::after {
+/* A light beam that runs around a card's border. */
+@property --beam {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+.beam::after {
   content: "";
-  position: fixed;
-  inset: -50%;
-  z-index: 60;
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  padding: 1.5px;
+  border-radius: inherit;
   pointer-events: none;
-  opacity: 0.05;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  animation: grain 1.2s steps(6) infinite;
+  background: conic-gradient(from var(--beam), transparent 0deg 250deg, var(--ember) 300deg, var(--geo) 330deg, transparent 360deg);
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#000 0 0) content-box exclude,
+    linear-gradient(#000 0 0);
+  animation: beam-spin 5s linear infinite;
 }
-@keyframes grain {
-  0%, 100% { transform: translate(0, 0); }
-  20% { transform: translate(-3%, 2%); }
-  40% { transform: translate(2%, -4%); }
-  60% { transform: translate(-4%, -1%); }
-  80% { transform: translate(3%, 3%); }
+@keyframes beam-spin {
+  to {
+    --beam: 360deg;
+  }
 }
 
-/* Infinite marquee */
+/* Links with a line that draws in from the left on hover. */
+.link-draw {
+  background: linear-gradient(currentColor, currentColor) no-repeat 0 100% / 0 1px;
+  transition: background-size 0.5s var(--ease-expo);
+}
+.link-draw:hover,
+.link-draw:focus-visible {
+  background-size: 100% 1px;
+}
+
+@supports (animation-timeline: view()) {
+  /* List items rise in as they enter — each by its own position, so lists cascade naturally. */
+  .motion-ok .rise {
+    animation: rise linear both;
+    animation-timeline: view();
+    animation-range: entry 0px entry 160px;
+  }
+  /* Images drift a little against the scroll (parallax) inside their frame. */
+  .motion-ok .parallax {
+    animation: parallax linear both;
+    animation-timeline: view();
+    animation-range: cover;
+  }
+  /* Image frames open like a shutter as they scroll in. */
+  .motion-ok .shutter {
+    animation: shutter linear both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 90%;
+  }
+}
+@keyframes rise {
+  from {
+    opacity: 0;
+    translate: 0 28px;
+  }
+}
+@keyframes parallax {
+  from {
+    translate: 0 -5%;
+    scale: 1.08;
+  }
+  to {
+    translate: 0 5%;
+    scale: 1.08;
+  }
+}
+@keyframes shutter {
+  from {
+    clip-path: inset(18% 12% 18% 12% round 1.25rem);
+  }
+  to {
+    clip-path: inset(0 0 0 0 round 0);
+  }
+}
+
+/* Intro loader: only while <html class="loading">, with a failsafe in case JS never runs. */
+.loader {
+  display: none;
+}
+html.loading .loader {
+  display: block;
+}
+@property --n {
+  syntax: "<integer>";
+  initial-value: 0;
+  inherits: false;
+}
+.loader-count::after {
+  counter-reset: n var(--n);
+  content: counter(n);
+  animation: loader-count 2s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+}
+@keyframes loader-count {
+  to {
+    --n: 100;
+  }
+}
+.loader-bar {
+  transform: scaleX(0);
+  animation: grow-x-in 2s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+}
+@keyframes grow-x-in {
+  to {
+    transform: scaleX(1);
+  }
+}
+.loader-roll {
+  animation: loader-roll 2s steps(5, end) forwards;
+}
+@keyframes loader-roll {
+  to {
+    transform: translateY(calc(-1.4em * 5));
+  }
+}
+.loader-fade {
+  animation: loader-fade 0.4s ease 2s forwards;
+}
+@keyframes loader-fade {
+  to {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+}
+.loader-top {
+  animation: loader-top 1s cubic-bezier(0.87, 0, 0.13, 1) 2.15s forwards;
+}
+.loader-bottom {
+  animation: loader-bottom 1s cubic-bezier(0.87, 0, 0.13, 1) 2.15s forwards;
+}
+@keyframes loader-top {
+  to {
+    transform: translateY(-100%);
+  }
+}
+@keyframes loader-bottom {
+  to {
+    transform: translateY(100%);
+  }
+}
+
+/* Highlighter: a marker stroke sweeps behind the words as they scroll in. */
+.marker {
+  background-image: linear-gradient(
+    transparent 80%,
+    var(--marker, var(--geo)) 80% 96%,
+    transparent 96%
+  );
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+@supports (animation-timeline: view()) {
+  .motion-ok .marker {
+    animation: marker linear both;
+    animation-timeline: view();
+    animation-range: entry 30% cover 45%;
+  }
+}
+@keyframes marker {
+  from {
+    background-size: 0% 100%;
+  }
+}
+
+/* Scroll-linked drawing: lines draw, rules extend, panels wipe in. */
+@supports (animation-timeline: view()) {
+  .motion-ok .draw-in {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+    animation: draw-in linear both;
+    animation-timeline: view();
+    animation-range: entry 0% cover 45%;
+  }
+  .motion-ok .grow-x {
+    transform-origin: 0 50%;
+    animation: grow-x linear both;
+    animation-timeline: view();
+    animation-range: entry 10% cover 40%;
+  }
+  .motion-ok .clip-up {
+    animation: clip-up linear both;
+    animation-timeline: view();
+    animation-range: entry 0% cover 30%;
+  }
+}
+@keyframes draw-in {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+@keyframes grow-x {
+  from {
+    transform: scaleX(0);
+  }
+}
+@keyframes clip-up {
+  from {
+    clip-path: inset(100% 0 0 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+/* Accordions (<details class="acc">) open with a height transition where supported. */
+:root {
+  interpolate-size: allow-keywords;
+}
+details.acc::details-content {
+  block-size: 0;
+  overflow-y: clip;
+  transition:
+    block-size 0.6s var(--ease-expo),
+    content-visibility 0.6s allow-discrete;
+}
+details.acc[open]::details-content {
+  block-size: auto;
+}
+
+/* Infinite marquee; speed is nudged by scroll velocity in Marquee.tsx. */
 .marquee-track {
   animation: marquee var(--marquee-duration, 40s) linear infinite;
 }
-.marquee:hover .marquee-track {
-  animation-play-state: paused;
+.marquee-reverse .marquee-track {
+  animation-direction: reverse;
 }
 @keyframes marquee {
   to {
@@ -317,62 +679,105 @@ html.lenis body {
   }
 }
 
-/* Availability pulse */
-.pulse-dot {
-  position: relative;
-  display: inline-block;
-  width: 0.5rem;
-  height: 0.5rem;
-  border-radius: 999px;
-  background: var(--color-coral);
-  box-shadow: 0 0 0 1px rgba(255, 107, 157, 0.3);
+/* The active exhibit's caption swaps in with a short wipe. */
+.motion-ok .exhibit-in {
+  animation: exhibit-in 0.7s var(--ease-expo) both;
 }
-.pulse-dot::after {
-  content: "";
+@keyframes exhibit-in {
+  from {
+    opacity: 0;
+    clip-path: inset(0 0 100% 0);
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    clip-path: inset(0 0 0 0);
+    transform: none;
+  }
+}
+
+/* Status blink: "● INDEXED". */
+.blink {
+  animation: blink 1.6s steps(1) infinite;
+}
+@keyframes blink {
+  50% {
+    opacity: 0.2;
+  }
+}
+.caret {
+  animation: blink 1.05s steps(1) infinite;
+}
+
+/* The crawler: a dot that travels a CSS offset-path. */
+.crawl-dot {
+  animation: crawl 7s linear infinite;
+}
+@keyframes crawl {
+  from {
+    offset-distance: 0%;
+  }
+  to {
+    offset-distance: 100%;
+  }
+}
+
+/* Radar ping around a map pin. */
+.ping {
   position: absolute;
   inset: 0;
-  border-radius: inherit;
-  background: inherit;
-  animation: pulse 2.4s var(--ease-expo) infinite;
+  border: 1.5px solid currentColor;
+  border-radius: 999px;
+  animation: ping 2.4s var(--ease-expo) infinite;
 }
-@keyframes pulse {
-  0% {
-    transform: scale(1);
-    opacity: 0.6;
+@keyframes ping {
+  from {
+    scale: 0.5;
+    opacity: 1;
   }
-  100% {
-    transform: scale(3.2);
+  to {
+    scale: 2.8;
     opacity: 0;
   }
 }
 
+/* Barcode stripes under section numbers. */
+.barcode {
+  background: repeating-linear-gradient(
+    90deg,
+    currentColor 0 2px,
+    transparent 2px 4px,
+    currentColor 4px 5px,
+    transparent 5px 8px,
+    currentColor 8px 11px,
+    transparent 11px 13px
+  );
+}
+
 /* ------------------------------------------------------------------
-   Page transitions (React <ViewTransition>) — a soft cross-fade.
+   Page transitions (React <ViewTransition>): the new page wipes up.
    ------------------------------------------------------------------ */
 ::view-transition {
   pointer-events: none;
 }
-/* New page wipes up over the old one, which sinks back and dims. */
 ::view-transition-old(.page-out) {
-  animation: 800ms var(--ease-quart) both vt-out;
+  animation: 550ms var(--ease-quart) both vt-out;
 }
 ::view-transition-new(.page-in) {
-  animation: 800ms var(--ease-quart) both vt-in;
+  animation: 750ms var(--ease-quart) both vt-in;
 }
 @keyframes vt-out {
   to {
-    transform: scale(0.95) translateY(-3vh);
-    opacity: 0.4;
+    opacity: 0;
+    transform: translateY(-4vh);
   }
 }
 @keyframes vt-in {
   from {
-    clip-path: inset(100% 0 0 0 round 32px);
-    transform: translateY(10vh);
+    clip-path: inset(100% 0 0 0);
   }
   to {
-    clip-path: inset(0 0 0 0 round 0);
-    transform: none;
+    clip-path: inset(0 0 0 0);
   }
 }
 ::view-transition-group(site-nav) {
@@ -386,12 +791,12 @@ html.lenis body {
   animation: none;
 }
 
-/* Theme switch: the new palette spreads out in a circle from the toggle. */
+/* Theme switch: the new palette spreads in a circle from the toggle. */
 html[data-vt="theme"]::view-transition-old(root) {
   animation: none;
 }
 html[data-vt="theme"]::view-transition-new(root) {
-  animation: theme-reveal 0.9s var(--ease-quart) both;
+  animation: theme-reveal 0.8s var(--ease-quart) both;
 }
 @keyframes theme-reveal {
   from {
@@ -402,643 +807,43 @@ html[data-vt="theme"]::view-transition-new(root) {
   }
 }
 
-/* ------------------------------------------------------------------
-   Living details
-   ------------------------------------------------------------------ */
-
-/* A light beam that runs around a rounded border. */
-@property --beam-angle {
-  syntax: "<angle>";
-  initial-value: 0deg;
-  inherits: false;
-}
-.beam::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  padding: 1.5px;
-  border-radius: inherit;
-  pointer-events: none;
-  background: conic-gradient(
-    from var(--beam-angle),
-    transparent 0deg 200deg,
-    var(--color-coral) 280deg,
-    var(--color-mauve) 330deg,
-    transparent 360deg
-  );
-  -webkit-mask:
-    linear-gradient(#000 0 0) content-box,
-    linear-gradient(#000 0 0);
-  -webkit-mask-composite: xor;
-  mask:
-    linear-gradient(#000 0 0) content-box exclude,
-    linear-gradient(#000 0 0);
-  animation: beam-spin 6s linear infinite;
-}
-@keyframes beam-spin {
-  to {
-    --beam-angle: 360deg;
-  }
-}
-
-/* Reading progress under the nav, driven by the scroll position itself. */
+/* Reading progress as a "crawl depth" bar under the header. */
 .scroll-progress {
-  position: absolute;
-  inset-inline: 0;
-  bottom: -1px;
   display: none;
-  transform-origin: 0 50%;
-  height: 3px;
-  background: var(--ig);
 }
 @supports (animation-timeline: scroll()) {
   .scroll-progress {
     display: block;
-    animation: progress-grow linear both;
+    transform-origin: 0 50%;
+    animation: grow-x linear both;
     animation-timeline: scroll(root block);
   }
 }
-@keyframes progress-grow {
-  from {
-    transform: scaleX(0);
-  }
-  to {
-    transform: scaleX(1);
-  }
-}
-
-/* Scroll-linked drawing for illustrations: lines draw, bars grow, cards rise. */
-@supports (animation-timeline: view()) {
-  .motion-ok .draw-in {
-    stroke-dasharray: 1;
-    stroke-dashoffset: 1;
-    animation: draw-in linear both;
-    animation-timeline: view();
-    animation-range: entry 5% cover 45%;
-  }
-  .motion-ok .grow-up {
-    transform-origin: 50% 100%;
-    animation: grow-up linear both;
-    animation-timeline: view();
-    animation-range: entry 5% cover 40%;
-  }
-  .motion-ok .rise-in {
-    animation: rise-in linear both;
-    animation-timeline: view();
-    animation-range: entry 0% cover 35%;
-  }
-}
-@keyframes draw-in {
-  to {
-    stroke-dashoffset: 0;
-  }
-}
-@keyframes grow-up {
-  from {
-    transform: scaleY(0);
-  }
-}
-@keyframes rise-in {
-  from {
-    opacity: 0;
-    transform: translateY(24px) scale(0.96);
-  }
-}
-
-/* A notification that slides in, waits, and slides out — on a loop. */
-.notify {
-  animation: notify 7s var(--ease-expo) infinite;
-}
-@keyframes notify {
-  0%,
-  8% {
-    opacity: 0;
-    transform: translateY(-14px) scale(0.94);
-  }
-  14%,
-  62% {
-    opacity: 1;
-    transform: none;
-  }
-  70%,
-  100% {
-    opacity: 0;
-    transform: translateY(-8px) scale(0.97);
-  }
-}
-
-/* A signal that runs along a systems-matrix row while it is hovered. */
-a:hover .sys-signal {
-  animation: sys-signal 1.6s var(--ease-quart) infinite;
-}
-@keyframes sys-signal {
-  0% {
-    left: 0%;
-    opacity: 0;
-  }
-  15%,
-  85% {
-    opacity: 1;
-  }
-  100% {
-    left: 100%;
-    opacity: 0;
-  }
-}
-
-/* Rolling labels: each letter slides up into its copy, a beat after the last. */
-.roll-ch {
-  display: inline-block;
-  transition: transform 0.6s var(--ease-expo);
-  transition-delay: calc(var(--i) * 16ms);
-}
-:is(a, button):is(:hover, :focus-visible) .roll-ch {
-  transform: translateY(-100%);
-}
-.motion-off .roll-ch {
-  transition: none;
-  transform: none !important;
-}
-
-/* A dark scene inside either theme: every token flips for what's inside. */
-.scheme-ink {
-  --bg: #0d0710;
-  --surface: #1a0f1e;
-  --surface-2: #271428;
-  --fg: #fdf0f5;
-  --muted: #c49ab0;
-  --subtle: #9a7088;
-  --line: rgba(255, 107, 157, 0.15);
-  --link: #ff6b9d;
-  --accent: #ff6b9d;
-  color-scheme: dark;
-  background: var(--bg);
-  color: var(--fg);
-}
-
-/* Project artwork opens out of a smaller window as it scrolls in. */
-@supports (animation-timeline: view()) {
-  .motion-ok .clip-in {
-    animation: clip-in linear both;
-    animation-timeline: view();
-    animation-range: entry 0% cover 32%;
-  }
-}
-@keyframes clip-in {
-  from {
-    clip-path: inset(12% 9% round 28px);
-  }
-  to {
-    clip-path: inset(0 round 22px);
-  }
-}
-
-/* Scanner line sweeping a camera frame */
-.scan-line {
-  animation: scan-line 2.4s var(--ease-quart) infinite alternate;
-}
-@keyframes scan-line {
-  from {
-    top: 0.75rem;
-  }
-  to {
-    top: calc(100% - 0.85rem);
-  }
-}
-
-/* Contribution heatmap: coral in five steps, cells pop in left to right. */
-.hm-cell[data-level="0"] {
-  background: var(--surface-2);
-}
-.hm-cell[data-level="1"] {
-  background: color-mix(in oklab, var(--color-coral) 35%, var(--surface-2));
-}
-.hm-cell[data-level="2"] {
-  background: color-mix(in oklab, var(--color-coral) 60%, var(--surface-2));
-}
-.hm-cell[data-level="3"] {
-  background: color-mix(in oklab, var(--color-coral) 82%, var(--surface-2));
-}
-.hm-cell[data-level="4"] {
-  background: var(--color-coral);
-  box-shadow: inset 0 0 0 1px rgba(255, 107, 157, 0.3);
-}
-.motion-ok .hm[data-inview="false"] .hm-cell:not(.hm-legend) {
-  transform: scale(0);
-}
-.motion-ok .hm[data-inview="true"] .hm-cell:not(.hm-legend) {
-  animation: hm-pop 0.7s var(--ease-expo) both;
-  animation-delay: calc(var(--c) * 14ms);
-}
-@keyframes hm-pop {
-  from {
-    transform: scale(0);
-    opacity: 0;
-  }
-}
-
-/* Slow spin for circular badges */
-.spin-slow {
-  animation: spin-slow 14s linear infinite;
-}
-@keyframes spin-slow {
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-/* Terminal caret */
-.caret {
-  animation: caret 1.1s steps(1) infinite;
-}
-@keyframes caret {
-  50% {
-    opacity: 0;
-  }
-}
 
 /* ------------------------------------------------------------------
-   Social layer — the Instagram gradient, story rings and reactions.
+   Reduced motion — `motion-off` comes from the site's own toggle.
    ------------------------------------------------------------------ */
-:root {
-  --ig: linear-gradient(115deg, #2563eb 0%, #06b6d4 25%, #10b981 50%, #6366f1 75%, #8b5cf6 100%);
-}
-.ig-gradient {
-  background-image: var(--ig);
-  background-size: 200% 200%;
-  animation: ig-shift 8s ease-in-out infinite alternate;
-}
-.ig-text {
-  background-image: var(--ig);
-  background-size: 200% 200%;
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  animation: ig-shift 6s ease-in-out infinite alternate;
-}
-@keyframes ig-shift {
-  from {
-    background-position: 0% 50%;
-  }
-  to {
-    background-position: 100% 50%;
-  }
-}
-
-/* An unseen story: a gradient ring that slowly turns. */
-@property --ring-a {
-  syntax: "<angle>";
-  initial-value: 0deg;
-  inherits: false;
-}
-.story-ring {
-  border-radius: 9999px;
-  padding: 2.5px;
-  background: conic-gradient(from var(--ring-a), #2563eb, #06b6d4, #10b981, #6366f1, #8b5cf6, #2563eb);
-  animation: ring-spin 4s linear infinite;
-}
-@keyframes ring-spin {
-  to {
-    --ring-a: 360deg;
-  }
-}
-
-/* Hearts rising off a live reel. */
-.float-up {
-  opacity: 0;
-  animation: float-up 3.2s ease-out infinite;
-}
-@keyframes float-up {
-  0% {
-    opacity: 0;
-    transform: translate(0, 0) scale(0.5);
-  }
-  15% {
-    opacity: 1;
-    transform: translate(0, -20%) scale(1);
-  }
-  100% {
-    opacity: 0;
-    transform: translate(var(--dx, 0), -380%) scale(0.85) rotate(14deg);
-  }
-}
-
-/* Double-tap anywhere: an Instagram-style like. */
-.like-burst {
-  position: fixed;
-  z-index: 95;
-  pointer-events: none;
-  translate: -50% -50%;
-  animation: like-burst 0.95s var(--ease-expo) forwards;
-}
-@keyframes like-burst {
-  0% {
-    opacity: 0;
-    scale: 0.2;
-    rotate: -18deg;
-  }
-  25% {
-    opacity: 1;
-    scale: 1.25;
-    rotate: 8deg;
-  }
-  45% {
-    scale: 1;
-    rotate: 0deg;
-  }
-  100% {
-    opacity: 0;
-    scale: 1.05;
-    translate: -50% -160%;
-  }
-}
-
-/* Story progress bar: fills, then the viewer moves on (animationend). */
-.story-fill {
-  animation: story-fill 6s linear forwards;
-}
-@keyframes story-fill {
-  from {
-    transform: scaleX(0);
-  }
-}
-
-/* "…is typing" dots in a DM. */
-.typing-dot {
-  animation: typing 1.2s ease-in-out infinite;
-}
-@keyframes typing {
-  0%,
-  60%,
-  100% {
-    opacity: 0.35;
-    translate: 0 0;
-  }
-  30% {
-    opacity: 1;
-    translate: 0 -4px;
-  }
-}
-
-/* A sticker that bobs gently. */
-.bob {
-  animation: bob 4.5s ease-in-out infinite;
-}
-@keyframes bob {
-  50% {
-    translate: 0 -8px;
-  }
-}
-
-/* Emoji reactions drifting up behind the hero. */
-.emoji-rise {
-  position: absolute;
-  bottom: -3rem;
-  opacity: 0;
-  animation: emoji-rise var(--dur, 11s) linear var(--delay, 0s) infinite;
-}
-@keyframes emoji-rise {
-  0% {
-    opacity: 0;
-    transform: translate(0, 0) rotate(0deg) scale(0.6);
-  }
-  10% {
-    opacity: var(--o, 0.9);
-  }
-  50% {
-    transform: translate(var(--sway, 30px), -55vh) rotate(var(--spin, 20deg)) scale(1);
-  }
-  85% {
-    opacity: var(--o, 0.9);
-  }
-  100% {
-    opacity: 0;
-    transform: translate(0, -110vh) rotate(calc(var(--spin, 20deg) * -1)) scale(0.8);
-  }
-}
-
-/* Gradient blobs that slowly wander. */
-.drift {
-  animation: drift 16s ease-in-out infinite alternate;
-}
-@keyframes drift {
-  33% {
-    translate: 8% 12%;
-    scale: 1.15;
-  }
-  66% {
-    translate: -10% 4%;
-    scale: 0.9;
-  }
-  100% {
-    translate: 4% -10%;
-    scale: 1.05;
-  }
-}
-
-/* Pointer trail of tiny reactions (fine pointers only, see SparkleTrail). */
-.sparkle {
-  position: fixed;
-  z-index: 94;
-  pointer-events: none;
-  translate: -50% -50%;
-  animation: sparkle 0.9s var(--ease-expo) forwards;
-}
-@keyframes sparkle {
-  from {
-    opacity: 1;
-    scale: 0.4;
-  }
-  30% {
-    scale: 1.1;
-  }
-  to {
-    opacity: 0;
-    scale: 0.6;
-    transform: translate(var(--dx, 0), var(--dy, -40px)) rotate(var(--spin, 40deg));
-  }
-}
-
-/* A sheen that sweeps across on hover. */
-.shine {
-  position: relative;
-  overflow: hidden;
-  isolation: isolate;
-}
-.shine::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  pointer-events: none;
-  background: linear-gradient(105deg, transparent 35%, rgba(255, 255, 255, 0.55) 50%, transparent 65%);
-  translate: -110% 0;
-}
-.motion-ok .shine:hover::after {
-  transition: translate 0.9s var(--ease-expo);
-  translate: 110% 0;
-}
-
-/* Like on a feed tile: a big heart pops and fades. */
-.like-pop {
-  animation: like-pop 0.9s var(--ease-expo) forwards;
-}
-@keyframes like-pop {
-  0% {
-    opacity: 0;
-    scale: 0.2;
-  }
-  30% {
-    opacity: 1;
-    scale: 1.2;
-  }
-  50% {
-    scale: 0.95;
-  }
-  80% {
-    opacity: 1;
-    scale: 1;
-  }
-  100% {
-    opacity: 0;
-    scale: 1.1;
-  }
-}
-
-.marquee-reverse .marquee-track {
-  animation-direction: reverse;
-}
-
-/* Inner pages: gradient underline that draws as it scrolls into view. */
-@supports (animation-timeline: view()) {
-  .motion-ok .draw-x {
-    transform-origin: 0 50%;
-    animation: draw-x linear both;
-    animation-timeline: view();
-    animation-range: entry 10% cover 35%;
-  }
-}
-@keyframes draw-x {
-  from {
-    transform: scaleX(0);
-  }
-}
-
-/* Instagram-gradient hairline that lights up around a card on hover / focus. */
-.ig-edge::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: 2;
-  pointer-events: none;
-  border-radius: inherit;
-  padding: 2px;
-  background: var(--ig);
-  mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
-  opacity: 0;
-  transition: opacity 0.5s var(--ease-apple);
-}
-.ig-edge:hover::before,
-.ig-edge:focus-within::before {
-  opacity: 1;
-}
-
-/* An icon that wiggles once when its card is hovered. */
-.motion-ok .group:hover .wiggle {
-  animation: wiggle 0.7s var(--ease-expo);
-}
-@keyframes wiggle {
-  25% {
-    rotate: -14deg;
-    scale: 1.15;
-  }
-  55% {
-    rotate: 9deg;
-  }
-  80% {
-    rotate: -4deg;
-  }
-}
-
-/* The paper plane takes off when a DM is sent. */
-.fly-off {
-  animation: fly-off 1.2s var(--ease-quart) forwards;
-}
-@keyframes fly-off {
-  30% {
-    transform: translate(-10px, 8px) rotate(-14deg);
-  }
-  100% {
-    opacity: 0;
-    transform: translate(240px, -180px) rotate(20deg) scale(0.5);
-  }
-}
-
-/* A reel's playback bar, looping. */
-.reel-progress {
-  transform-origin: 0 50%;
-  animation: reel-progress 5s linear infinite;
-}
-@keyframes reel-progress {
-  from {
-    transform: scaleX(0);
-  }
-  to {
-    transform: scaleX(1);
-  }
-}
-
-/* App icons jiggle like an edit-mode home screen. */
-.jiggle {
-  animation: jiggle 0.32s ease-in-out infinite alternate;
-}
-@keyframes jiggle {
-  from {
-    rotate: -2.5deg;
-  }
-  to {
-    rotate: 2.5deg;
-  }
-}
-
-/* ------------------------------------------------------------------
-   Reduced motion
-   ------------------------------------------------------------------ */
-/* `motion-off` is set before paint from the site's own toggle
-   (lib/motion-pref.ts) — a class, not a media query. */
-.motion-off .marquee-track,
-.motion-off .pulse-dot::after,
-.motion-off .beam::after,
-.motion-off .caret,
+.motion-off .ambient::before,
+.motion-off .ambient::after,
 .motion-off .spin-slow,
-.motion-off .notify,
-.motion-off .ig-gradient,
-.motion-off .ig-text,
-.motion-off .story-ring,
-.motion-off .bob,
-.motion-off .story-fill,
-.motion-off .typing-dot,
+.motion-off .grad-text,
+.motion-off .beam::after,
+.motion-off .rise,
+.motion-off .parallax,
+.motion-off .shutter,
+.motion-off .panel,
 .motion-off .drift,
-.motion-off .scan-line,
-.motion-off a:hover .sys-signal,
-.motion-off .grain::after,
-.motion-off .draw-x,
-.motion-off .wiggle,
-.motion-off .reel-progress,
-.motion-off .jiggle,
-.motion-off .fly-off {
+.motion-off .marquee-track,
+.motion-off .blink,
+.motion-off .caret,
+.motion-off .crawl-dot {
   animation: none;
 }
-.motion-off .float-up,
-.motion-off .emoji-rise,
-.motion-off .sparkle,
-.motion-off .like-burst {
+.motion-off .ping {
   display: none;
 }
 html.motion-off::view-transition-old(*),
 html.motion-off::view-transition-new(*),
 html.motion-off::view-transition-group(*) {
   animation-duration: 0s !important;
-  animation-delay: 0s !important;
 }

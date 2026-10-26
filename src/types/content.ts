@@ -43,6 +43,8 @@ export interface Project {
   evidence?: { title: string; badge: string; desc: string; src: string }[];
   /** One-line hook shown on the home page's case-study reels. */
   hook?: string;
+  /** The single headline number for the case-study card. Verified figures only. */
+  highlight?: { value: string; label: string };
   art: ArtKind;
   /** Gradient used behind the project's artwork. */
   tint: [string, string];

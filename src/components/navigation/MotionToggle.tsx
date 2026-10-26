@@ -18,8 +18,8 @@ export function MotionToggle({ className }: { className?: string }) {
       aria-label={on ? "Turn animations off" : "Turn animations on"}
       title={on ? "Animations on" : "Animations off"}
       className={cn(
-        "grid size-9 place-items-center rounded-full transition-colors duration-300",
-        on ? "text-fg hover:bg-surface-2" : "ig-gradient text-white",
+        "grid size-9 place-items-center rounded-none transition-colors duration-300",
+        on ? "text-fg hover:bg-surface-2" : "bg-ember text-white",
         className,
       )}
     >

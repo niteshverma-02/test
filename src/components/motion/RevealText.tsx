@@ -31,9 +31,13 @@ export function RevealText({ as = "div", children, className, delay = 0, immedia
         const split = SplitText.create(el, {
           type: "lines",
           mask: "lines",
+          // Keep the real text exposed: an aria-label on a <p> is ignored by screen readers.
+          aria: "none",
           autoSplit: true,
           onSplit(self) {
             gsap.set(el, { visibility: "visible" });
+            // Masks get a little extra room so descenders and pen squiggles aren't clipped.
+            gsap.set(self.masks, { paddingBottom: "0.14em", marginBottom: "-0.14em" });
             return gsap.from(self.lines, {
               yPercent: 112,
               duration: 1.25,

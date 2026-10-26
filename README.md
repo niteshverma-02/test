@@ -1,6 +1,6 @@
-# Tanu Rai — Portfolio
+# Leesa Rai — SEO · AEO · GEO Portfolio
 
-Social-media-styled portfolio (Instagram gradient, story rings, reels, double-tap likes) built with Next.js 16 (App Router, Cache Components), Tailwind CSS 4, GSAP + ScrollTrigger, Lenis and Motion. Light and dark mode, fully responsive.
+"Visibility Report" portfolio — dark-first and cinematic: warm black, ember, liquid chrome and brass (one colour per engine: SEO ember, AEO chrome, GEO brass), Anton poster type with IBM Plex. Real-time 3D with three.js / React Three Fiber: a glass magnifying lens that refracts the hero headline, chrome SEO/AEO/GEO emblems, and the evidence screenshots on a scroll-driven 3D ring with a custom shader. Built with Next.js 16, Tailwind CSS 4, GSAP + ScrollTrigger, Lenis and Motion. Without WebGL or with motion off, every 3D piece falls back to plain HTML.
 
 ```bash
 npm install
@@ -13,7 +13,7 @@ npm run lint
 
 | Route | What it is |
 | --- | --- |
-| `/` | Instagram-style profile hero with tappable service stories, hashtag ticker, case studies as Reels, feed grid with tabs, process carousel, DM-style contact |
+| `/` | Report cover (SEARCHED. ANSWERED. FOUND.), live rank-tracker demo, patient-query marquee, SEO/AEO/GEO engine panels, verified evidence (KPIs, before/after bars, exhibits on a scroll-driven 3D ring with filters and lightbox), ranked case index with cursor preview, pinned crawl→index→rank process, services index, closing CTA |
 | `/work` | All projects with filter chips (Professional / Personal / Mobile / Web …) |
 | `/work/[slug]` | Project page: problem, role, how it's built, challenges, links |
 | `/skills` | Skill cards per area + "How I work" steps |

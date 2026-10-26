@@ -1,24 +1,20 @@
-/**
- * Lets the hero wait for the intro curtain. Resolves immediately when
- * the intro is skipped (repeat visit, reduced motion, no JS).
+/*
+ * The intro loader (pure CSS, timed by the pre-paint script in layout.tsx)
+ * holds <html class="loading"> and adds "revealing" as the curtain parts.
+ * onIntroDone runs its callback at that moment — or at once with no loader.
  */
-let done = false;
-const listeners = new Set<() => void>();
-
-export function markIntroDone() {
-  if (done) return;
-  done = true;
-  listeners.forEach((l) => l());
-  listeners.clear();
-}
-
-export function onIntroDone(callback: () => void) {
-  if (done) {
-    callback();
+export function onIntroDone(cb: () => void) {
+  const html = document.documentElement;
+  const ready = () => !html.classList.contains("loading") || html.classList.contains("revealing");
+  if (ready()) {
+    cb();
     return () => {};
   }
-  listeners.add(callback);
-  return () => {
-    listeners.delete(callback);
-  };
+  const mo = new MutationObserver(() => {
+    if (!ready()) return;
+    mo.disconnect();
+    cb();
+  });
+  mo.observe(html, { attributes: true, attributeFilter: ["class"] });
+  return () => mo.disconnect();
 }

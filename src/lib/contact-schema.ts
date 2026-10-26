@@ -10,7 +10,8 @@ export const contactSchema = z.object({
     .min(20, "A little more detail helps — at least 20 characters.")
     .max(4000, "Please keep it under 4,000 characters."),
   /** Honeypot. Real people never see or fill this field. */
-  company: z.string().max(0).optional().or(z.literal("")),
+  // Any value is accepted here; the API then silently drops the message (see route.ts).
+  company: z.string().max(200).optional(),
 });
 
 export type ContactInput = z.infer<typeof contactSchema>;

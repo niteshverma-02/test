@@ -11,10 +11,11 @@ export default function Error({ error, reset }: { error: Error & { digest?: stri
   return (
     <main id="main" className="grid min-h-svh place-items-center px-gutter text-center">
       <div>
-        <h1 className="headline text-[clamp(2.25rem,6vw,4rem)]">Something went wrong.</h1>
+        <p className="label text-[10px] text-muted">Status 500 · Crawl error</p>
+        <h1 className="poster mt-4 text-[clamp(3rem,10vw,7rem)]">Something broke.</h1>
         <p className="mt-3 text-muted">Please try again.</p>
         <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
-          <button type="button" onClick={reset} className="h-11 rounded-full bg-fg px-6 text-[15px] font-medium text-bg">
+          <button type="button" onClick={reset} className="label h-12 bg-fg px-6 text-[11px] text-bg hover:bg-ember">
             Try again
           </button>
           <Link href="/" className="font-medium text-link hover:underline">

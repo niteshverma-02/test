@@ -26,7 +26,7 @@ export function CopyEmail({ email }: { email: string }) {
           setCopied(false);
         }
       }}
-      className="inline-flex h-9 items-center gap-2 rounded-full bg-bg px-4 text-[13px] font-medium transition-colors hover:bg-surface-2"
+      className="label inline-flex h-9 items-center gap-2 rounded-lg border border-line px-3 text-[10px] transition-colors hover:bg-fg hover:text-bg"
     >
       {copied ? <Check aria-hidden className="size-3.5 text-accent" /> : <Copy aria-hidden className="size-3.5" />}
       <span aria-live="polite">{copied ? "Copied" : "Copy"}</span>

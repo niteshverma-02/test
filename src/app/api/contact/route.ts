@@ -20,6 +20,8 @@ function limited(ip: string) {
   const recent = (hits.get(ip) ?? []).filter((t) => now - t < WINDOW_MS);
   recent.push(now);
   hits.set(ip, recent);
+  // Forget IPs whose window has fully passed.
+  if (hits.size > 500) for (const [k, v] of hits) if (v.every((t) => now - t >= WINDOW_MS)) hits.delete(k);
   return recent.length > LIMIT;
 }
 

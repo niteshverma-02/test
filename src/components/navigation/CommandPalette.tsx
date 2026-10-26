@@ -254,7 +254,7 @@ export function CommandPalette() {
             animate={{ opacity: 1, scale: 1, y: 0, filter: "blur(0px)" }}
             exit={{ opacity: 0, scale: 0.97, y: -6, filter: "blur(6px)" }}
             transition={{ type: "spring", stiffness: 380, damping: 30 }}
-            className="beam relative w-full max-w-xl overflow-hidden rounded-[24px] border border-line bg-[var(--glass)] shadow-[var(--shadow)] backdrop-blur-2xl backdrop-saturate-150"
+            className="relative w-full max-w-xl overflow-hidden rounded-[24px] border border-line bg-bg shadow-[var(--shadow)] backdrop-blur-2xl backdrop-saturate-150"
           >
             <div className="flex items-center gap-3 border-b border-line px-5">
               <Search aria-hidden className="size-[18px] shrink-0 text-muted" />
@@ -276,7 +276,7 @@ export function CommandPalette() {
                 spellCheck={false}
                 autoComplete="off"
               />
-              <kbd className="rounded-md border border-line px-1.5 py-0.5 font-sans text-[11px] text-muted">esc</kbd>
+              <kbd className="rounded-none border border-line px-1.5 py-0.5 font-sans text-[11px] text-muted">esc</kbd>
             </div>
 
             <div ref={listRef} id={listId} role="listbox" aria-label="Results" className="max-h-[min(56vh,420px)] overflow-y-auto overscroll-contain p-2" data-lenis-prevent>
@@ -295,19 +295,19 @@ export function CommandPalette() {
                       onPointerMove={() => !selected && setActive(i)}
                       onMouseDown={(e) => e.preventDefault()}
                       onClick={() => run(cmd)}
-                      className="relative flex cursor-pointer items-center gap-3 rounded-2xl px-3 py-2.5"
+                      className="relative flex cursor-pointer items-center gap-3 rounded-none px-3 py-2.5"
                     >
                       {selected && (
                         <motion.span
                           layoutId="palette-active"
-                          className="absolute inset-0 -z-10 rounded-2xl bg-surface-2"
+                          className="absolute inset-0 -z-10 rounded-none bg-surface-2"
                           transition={{ type: "spring", stiffness: 500, damping: 38 }}
                         />
                       )}
                       <span
                         className={cn(
-                          "grid size-9 shrink-0 place-items-center rounded-xl transition-colors duration-300",
-                          selected ? "ig-gradient text-white" : "bg-surface text-fg",
+                          "grid size-9 shrink-0 place-items-center rounded-none transition-colors duration-300",
+                          selected ? "bg-ember text-white" : "bg-surface text-fg",
                         )}
                       >
                         <Icon aria-hidden className="size-4" />

@@ -1,6 +1,6 @@
 import { motionAllowed } from "@/lib/motion-pref";
 
-const COLORS = ["#feda75", "#fa7e1e", "#d62976", "#962fbf", "#4f5bd5"];
+const COLORS = ["#ff7a59", "#7fb7ff", "#f2c879", "#f5f1ea", "#0a1020"];
 
 type Options = { x?: number; y?: number; count?: number; spread?: number };
 

@@ -1,49 +1,24 @@
 import type { Metadata, Viewport } from "next";
-import { Bricolage_Grotesque, Inter, Instrument_Serif, JetBrains_Mono } from "next/font/google";
+import { Caveat, Geist, Geist_Mono } from "next/font/google";
 import { profile } from "@/content/profile";
+import { services } from "@/content/services";
 import { metadataBase, siteDescription, siteName, siteUrl } from "@/lib/site";
 import { modeScript } from "@/lib/mode-script";
 import { motionScript } from "@/lib/motion-pref";
-import { SiteNav } from "@/components/navigation/SiteNav";
-import { TabBar } from "@/components/navigation/TabBar";
-import { SiteFooter } from "@/components/layout/SiteFooter";
+import { Header } from "@/components/report/Header";
+import { Footer } from "@/components/report/Footer";
+import { Cursor } from "@/components/report/Cursor";
+import { Loader } from "@/components/report/Loader";
+import { Spotlight } from "@/components/report/Spotlight";
 import { SmoothScroll } from "@/components/motion/SmoothScroll";
-import { Intro } from "@/components/motion/Intro";
-import { Cursor } from "@/components/motion/Cursor";
-import { SecretCode } from "@/components/motion/SecretCode";
-import { DoubleTapLike } from "@/components/motion/DoubleTapLike";
-import { SparkleTrail } from "@/components/motion/SparkleTrail";
 import { CommandPalette } from "@/components/navigation/CommandPalette";
 import { Toaster } from "@/components/ui/Toaster";
-import { ScrollTop } from "@/components/layout/ScrollTop";
 import "./globals.css";
 
-const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-inter",
-  display: "swap",
-});
-
-// Display face: a friendly grotesk with personality, plus an italic serif for accents.
-const bricolage = Bricolage_Grotesque({
-  subsets: ["latin"],
-  variable: "--font-bricolage",
-  display: "swap",
-});
-
-const serif = Instrument_Serif({
-  subsets: ["latin"],
-  weight: "400",
-  style: ["normal", "italic"],
-  variable: "--font-serif-accent",
-  display: "swap",
-});
-
-const jetbrains = JetBrains_Mono({
-  subsets: ["latin"],
-  variable: "--font-jetbrains",
-  display: "swap",
-});
+// Geist for everything you read, Geist Mono for labels and numbers, Caveat for the hand-written notes.
+const geist = Geist({ subsets: ["latin"], variable: "--font-geist", display: "swap" });
+const geistMono = Geist_Mono({ subsets: ["latin"], variable: "--font-geist-mono", display: "swap" });
+const caveat = Caveat({ subsets: ["latin"], weight: ["500", "700"], variable: "--font-caveat", display: "swap" });
 
 export const metadata: Metadata = {
   metadataBase,
@@ -63,46 +38,64 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#fffaf6" },
-    { media: "(prefers-color-scheme: dark)", color: "#0a0a0a" },
-  ],
-  colorScheme: "light dark",
+  themeColor: "#0a1020",
+  colorScheme: "dark light",
 };
 
 // Runs before first paint: colour mode, and whether entrance animations may hide content.
-const motionFlag = `try{var d=document.documentElement;d.classList.add("js");${motionScript}if(sessionStorage.getItem("intro-seen"))d.classList.add("intro-seen")}catch(e){}`;
+// The intro loader shows once per session, only with motion on.
+const motionFlag = `try{var d=document.documentElement;d.classList.add("js");${motionScript}if(d.classList.contains("motion-ok")&&!sessionStorage.getItem("intro-seen")){sessionStorage.setItem("intro-seen","1");d.classList.add("loading");setTimeout(function(){d.classList.add("revealing")},2150);setTimeout(function(){d.classList.remove("loading","revealing")},3300)}}catch(e){}`;
+
+// An SEO portfolio should practise what it preaches: Person + ProfessionalService structured data.
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Person",
+      name: profile.identity.name,
+      jobTitle: profile.role,
+      description: profile.description,
+      email: `mailto:${profile.contact.email}`,
+      address: { "@type": "PostalAddress", addressCountry: profile.location.label },
+      knowsAbout: profile.about.interests,
+      sameAs: profile.social.flatMap((s) => (s.href ? [s.href] : [])),
+      ...(siteUrl ? { url: siteUrl } : {}),
+    },
+    {
+      "@type": "ProfessionalService",
+      name: `${profile.identity.name} — SEO, AEO & GEO`,
+      description: siteDescription,
+      areaServed: profile.location.label,
+      hasOfferCatalog: {
+        "@type": "OfferCatalog",
+        name: "Search visibility services",
+        itemListElement: services.map((s) => ({ "@type": "Offer", itemOffered: { "@type": "Service", name: s.title, description: s.description } })),
+      },
+    },
+  ],
+};
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html
-      lang="en"
-      className={`${inter.variable} ${bricolage.variable} ${serif.variable} ${jetbrains.variable}`}
-      suppressHydrationWarning
-    >
+    <html lang="en" className={`${geist.variable} ${geistMono.variable} ${caveat.variable}`} suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: motionFlag + modeScript }} />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }} />
       </head>
-      <body className="grain pb-[calc(3.75rem+env(safe-area-inset-bottom))] lg:pb-0">
-        <a
-          href="#main"
-          className="sr-only z-[100] rounded-full bg-fg px-5 py-3 text-sm font-medium text-bg focus:not-sr-only focus:fixed focus:left-4 focus:top-4"
-        >
+      <body>
+        <a href="#main" className="label sr-only z-[100] bg-fg px-5 py-3 text-[11px] text-bg focus:not-sr-only focus:fixed focus:left-4 focus:top-4">
           Skip to content
         </a>
-        <Intro />
-        <SiteNav />
-        <TabBar />
+        <Loader />
+        <div aria-hidden className="ambient" />
+        <Header />
         {children}
-        <SiteFooter />
+        <Footer />
         <SmoothScroll />
         <Cursor />
+        <Spotlight />
         <CommandPalette />
         <Toaster />
-        <ScrollTop />
-        <SecretCode />
-        <DoubleTapLike />
-        <SparkleTrail />
       </body>
     </html>
   );

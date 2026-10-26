@@ -1,14 +1,8 @@
 import type { Metadata } from "next";
-import Link from "next/link";
-import { ChevronRight, Compass, Heart, Mail, MessageCircle, Repeat2, Send, Target } from "lucide-react";
-import { profile } from "@/content/profile";
+import { services } from "@/content/services";
 import { PageShell } from "@/components/layout/PageShell";
-import { DeckIn } from "@/components/motion/DeckIn";
-import { FadeIn } from "@/components/motion/FadeIn";
-import { RevealText } from "@/components/motion/RevealText";
-import { StoryAvatar } from "@/components/mocks/Mocks";
-import { ServicesHero } from "@/components/services/ServicesHero";
-import { ServiceFeed } from "@/components/services/ServiceFeed";
+import { ServiceIndex } from "@/components/report/ServiceIndex";
+import { Btn, PageHead, SectionHead } from "@/components/report/ui";
 
 export const metadata: Metadata = {
   title: "Services",
@@ -19,151 +13,124 @@ export const metadata: Metadata = {
 
 const workStyles = [
   {
-    Icon: Repeat2,
     tag: "Ongoing",
-    title: "Monthly Retainer",
-    description:
-      "For doctors and clinics needing ongoing healthcare SEO, Google Business Profile management, local citations, and AI search visibility.",
+    title: "Monthly retainer",
+    description: "For doctors and clinics needing ongoing healthcare SEO, Google Business Profile management, local citations, and AI search visibility.",
     best: "Practices wanting continuous search growth",
-    cta: "Subscribe monthly",
   },
   {
-    Icon: Target,
     tag: "Scoped",
-    title: "Project-Based",
-    description:
-      "For defined projects such as a complete website SEO audit, technical health overhaul, or targeted AEO/GEO content architecture.",
+    title: "Project-based",
+    description: "For defined projects such as a complete website SEO audit, technical health overhaul, or targeted AEO/GEO content architecture.",
     best: "Clinics launching new websites or fixing audits",
-    cta: "Start a project",
   },
   {
-    Icon: Compass,
     tag: "Advice",
     title: "Consultation",
-    description:
-      "For healthcare brands and businesses that need strategic search guidance, competitor analysis, or local visibility direction.",
+    description: "For healthcare brands and businesses that need strategic search guidance, competitor analysis, or local visibility direction.",
     best: "Founders wanting direct SEO advice",
-    cta: "Book a chat",
   },
 ];
+
+/* Written to be quotable: short, direct answers — the same format AI engines lift into answers. */
+const faqs = [
+  {
+    q: "What is the difference between SEO, AEO and GEO?",
+    a: "SEO helps your pages rank in Google's regular results and the local map pack. AEO (Answer Engine Optimisation) shapes your content so Google's AI Overviews and other answer boxes can quote it. GEO (Generative Engine Optimisation) builds the mentions and signals that lead ChatGPT, Gemini and Perplexity to recommend you by name.",
+  },
+  {
+    q: "Why does a doctor need AEO and GEO, not only SEO?",
+    a: "Patients increasingly ask AI tools questions like “who is a good knee surgeon near me?” and act on the answer without clicking ten links. If your practice isn't part of that answer, you are invisible at the moment of decision.",
+  },
+  {
+    q: "How long does healthcare SEO take to show results?",
+    a: "Technical fixes and Google Business Profile improvements can show movement within weeks; content and authority work typically compounds over three to six months. Progress is tracked in Google Search Console from day one.",
+  },
+  {
+    q: "Where do you start with a new clinic?",
+    a: "With an audit: website health, how patients search for your specialty and location, what competitors rank for, and how AI tools currently describe you. That becomes a prioritised plan.",
+  },
+  {
+    q: "Do you use black-hat or paid link schemes?",
+    a: "No. All work is white-hat: genuine content, real community participation, accurate citations and ethical outreach — the kind of authority that lasts and keeps medical trust intact.",
+  },
+];
+
+const faqLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faqs.map((f) => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })),
+};
 
 export default function ServicesPage() {
   return (
     <PageShell>
-      <ServicesHero ways={workStyles.length} />
-      <ServiceFeed />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd).replace(/</g, "\\u003c") }} />
+      <PageHead
+        emblem="AEO"
+        crumb="Services"
+        title={
+          <>
+            Services<span className="text-ember">.</span>
+          </>
+        }
+        deck="Search visibility for doctors, clinics and local businesses — across Google, AI answers and the map."
+        meta={[
+          { k: "Services", v: services.length },
+          { k: "Ways to work", v: workStyles.length },
+          { k: "Engines", v: "SEO · AEO · GEO" },
+          { k: "Approach", v: "White-hat only" },
+        ]}
+      />
 
-      {/* Engagement models as subscription tiers */}
-      <section id="tiers" aria-labelledby="tiers-title" className="container-page scroll-mt-24 pb-24 lg:pb-32">
-        <div className="text-center">
-          <p className="eyebrow mark">Subscribe</p>
-          <RevealText as="h2" id="tiers-title" className="headline mx-auto mt-4 max-w-3xl text-[clamp(2.4rem,5.5vw,4.5rem)]">
-            How we can <span className="serif ig-text pr-[0.06em]">work together.</span>
-          </RevealText>
-          <p className="mx-auto mt-5 max-w-lg text-[17px] text-muted">Three ways in. Pick the one that matches where your brand is right now.</p>
+      <section aria-labelledby="list-title" className="container-page pt-12 lg:pt-16">
+        <SectionHead num="01" label="Index" id="list-title" title="What I optimise." intro="Open any line for the full scope." />
+        <div className="mt-12">
+          <ServiceIndex openFirst />
         </div>
-
-        <DeckIn className="mt-14 grid gap-4 md:grid-cols-3 lg:gap-6">
-          {workStyles.map((w, i) => {
-            const featured = i === 0;
-            return (
-              <article
-                key={w.title}
-                className={`group relative flex min-w-0 flex-col overflow-hidden rounded-[28px] p-6 transition-transform duration-500 ease-[var(--ease-expo)] hover:-translate-y-2 sm:p-8 md:p-6 lg:p-8 ${
-                  featured ? "bg-ink text-[#fdf0f5]" : "border border-line bg-surface"
-                }`}
-              >
-                {featured && <span aria-hidden className="drift absolute -right-20 -top-20 size-64 rounded-full bg-[#962fbf] opacity-50 blur-[80px]" />}
-                <div className="relative flex items-center justify-between gap-3">
-                  <span className="ig-gradient grid size-12 shrink-0 place-items-center rounded-2xl text-white shadow-lg">
-                    <w.Icon aria-hidden className="size-6" />
-                  </span>
-                  <span className={`truncate rounded-full px-3 py-1 text-[12px] font-semibold ${featured ? "bg-white/10 text-white/80" : "bg-bg text-muted"}`}>
-                    Tier {String(i + 1).padStart(2, "0")} · {w.tag}
-                  </span>
-                </div>
-                <h3 className="headline relative mt-8 text-[clamp(1.75rem,3vw,2.25rem)]">{w.title}</h3>
-                <p className={`relative mt-3 text-[15px] leading-relaxed ${featured ? "text-white/75" : "text-muted"}`}>{w.description}</p>
-                <p className={`relative mt-auto border-t pt-4 text-[13px] ${featured ? "border-white/15 text-white/70" : "border-line text-muted"}`}>
-                  <span className={`font-semibold ${featured ? "text-white" : "text-fg"}`}>Best for · </span>
-                  {w.best}
-                </p>
-                <Link
-                  href="/contact"
-                  className={`relative mt-6 inline-flex h-12 items-center justify-center gap-1.5 rounded-xl text-[15px] font-semibold transition-transform active:scale-95 ${
-                    featured ? "ig-gradient shine text-white" : "bg-fg text-bg"
-                  }`}
-                >
-                  {w.cta} <ChevronRight aria-hidden className="size-4 transition-transform group-hover:translate-x-0.5" />
-                </Link>
-              </article>
-            );
-          })}
-        </DeckIn>
       </section>
 
-      {/* Closing CTA as a sponsored post, laid out like Instagram's desktop post view */}
-      <section id="dm" aria-labelledby="dm-title" className="container-page scroll-mt-24 pb-24 lg:pb-32">
-        <FadeIn className="relative mx-auto grid max-w-5xl overflow-hidden rounded-[32px] border border-line bg-bg shadow-[var(--shadow)] md:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)]">
-          {/* Media */}
-          <div className="relative flex min-h-[340px] min-w-0 flex-col justify-end overflow-hidden bg-ink p-7 text-[#fdf0f5] sm:min-h-[420px] sm:p-10">
-            <span aria-hidden className="drift absolute -left-24 -top-24 size-96 rounded-full bg-[#d62976] opacity-60 blur-[90px]" />
-            <span aria-hidden className="drift absolute -bottom-32 -right-24 size-96 rounded-full bg-[#4f5bd5] opacity-60 blur-[100px] [animation-delay:-8s]" />
-            {["💬", "✨", "📈"].map((e, i) => (
-              <span
-                key={e}
-                aria-hidden
-                className="bob absolute text-[2rem] sm:text-[2.5rem]"
-                style={{ right: `${10 + i * 16}%`, top: `${12 + (i % 2) * 12}%`, animationDelay: `${i * -1.4}s` }}
-              >
-                {e}
-              </span>
-            ))}
-            <p className="relative text-[12px] font-semibold uppercase tracking-[0.2em] text-white/70">Ready to start?</p>
-            <RevealText as="h2" id="dm-title" className="headline relative mt-3 text-[clamp(2.4rem,6vw,4.25rem)]">
-              Tell me about <span className="serif ig-text pr-[0.06em]">your project.</span>
-            </RevealText>
-          </div>
-
-          {/* Post side */}
-          <div className="flex min-w-0 flex-col">
-            <div className="flex items-center gap-3 border-b border-line px-5 py-4">
-              <StoryAvatar label={profile.identity.initials} className="size-9 text-[11px]" />
-              <div className="min-w-0 leading-tight">
-                <p className="truncate text-[14px] font-semibold">{profile.identity.handle}</p>
-                <p className="text-[12px] text-muted">Sponsored</p>
+      <section aria-labelledby="ways-title" className="container-page pt-14 lg:pt-20">
+        <SectionHead num="02" label="Engagement" id="ways-title" title="Ways to work." />
+        <div className="mt-12 grid gap-4 md:grid-cols-3">
+          {workStyles.map((w, i) => (
+            <article key={w.title} className="group relative flex flex-col overflow-hidden panel p-7">
+              <span aria-hidden className="absolute inset-0 origin-bottom scale-y-0 bg-fg transition-transform duration-500 ease-[var(--ease-expo)] group-hover:scale-y-100" />
+              <div className="relative flex flex-1 flex-col transition-colors duration-300 group-hover:text-bg">
+                <div className="flex items-center justify-between">
+                  <span className="label text-[10px]">{w.tag}</span>
+                  <span className="font-mono text-[12px]">0{i + 1}</span>
+                </div>
+                <h3 className="poster mt-10 text-[clamp(2.4rem,4vw,3.4rem)]">{w.title}</h3>
+                <p className="mt-4 text-[15px] opacity-80">{w.description}</p>
+                <p className="label mt-auto pt-8 text-[10px]">
+                  <span className="text-ember">Best for →</span> {w.best}
+                </p>
               </div>
-            </div>
-            {/* The ad's call-to-action strip */}
-            <Link
-              href="/contact"
-              className="ig-gradient shine group flex min-h-14 items-center justify-between gap-3 px-5 text-[15px] font-semibold text-white"
-            >
-              Let&rsquo;s Discuss Your Project
-              <ChevronRight aria-hidden className="size-5 transition-transform group-hover:translate-x-1" />
-            </Link>
-            <div className="flex-1 px-5 py-5 text-[15px] leading-relaxed">
-              <p>
-                <span className="font-semibold">{profile.identity.handle}</span> Whether you&rsquo;re a doctor looking to grow patient appointments or a business improving local search rankings, let&rsquo;s discuss your SEO strategy.
-              </p>
-              <p className="mt-3 break-words text-accent">#HealthcareSEO #LocalSEO #AEOGEO #MedicalSEO #GoogleSearchConsole</p>
-            </div>
-            <div className="flex flex-wrap items-center gap-x-4 gap-y-2 border-t border-line px-5 py-3">
-              <span aria-hidden className="flex items-center gap-4">
-                <Heart className="size-6" />
-                <MessageCircle className="size-6 -scale-x-100" />
-                <Send className="size-6" />
-              </span>
-              <a
-                href={`mailto:${profile.contact.email}`}
-                className="ml-auto inline-flex min-h-10 min-w-0 items-center gap-2 rounded-full bg-surface px-4 text-[13px] font-medium transition-colors hover:bg-surface-2"
-              >
-                <Mail aria-hidden className="size-4 shrink-0" />
-                <span className="truncate">{profile.contact.email}</span>
-              </a>
-            </div>
-          </div>
-        </FadeIn>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section aria-labelledby="faq-title" className="container-page py-14 lg:py-20">
+        <SectionHead num="03" label="FAQ" id="faq-title" title="Questions, answered." intro="Marked up as FAQPage schema — the format answer engines read." />
+        <div className="mt-12 border-t border-line">
+          {faqs.map((f, i) => (
+            <details key={f.q} name="faq" className="acc rise group border-b border-line">
+              <summary className="grid cursor-pointer list-none grid-cols-[3rem_1fr_auto] items-center gap-4 py-6 hover:text-ember [&::-webkit-details-marker]:hidden">
+                <span className="font-mono text-[12px]">Q{i + 1}</span>
+                <span className="text-[clamp(1.1rem,2vw,1.4rem)] font-medium">{f.q}</span>
+                <span aria-hidden className="font-mono text-[18px] transition-transform duration-500 group-open:rotate-45">
+                  +
+                </span>
+              </summary>
+              <p className="max-w-3xl pb-8 pl-[4rem] text-[16px] text-muted">{f.a}</p>
+            </details>
+          ))}
+        </div>
+        <div className="mt-12">
+          <Btn href="/contact">Ask your own question</Btn>
+        </div>
       </section>
     </PageShell>
   );
