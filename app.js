@@ -55,7 +55,7 @@ const S = {
 /* ================================================================ screen registry (sidebar + notes) */
 const GROUPS = [
   ['Getting started', [
-    ['splash', 'Splash', 'Brand screen on app launch.', ['Animated gradient logo', 'Get started / Login options'], { light: 1, cls: 'splash' }],
+    ['splash', 'Splash', 'Brand screen on app launch.', ['Brand logo on brand color', 'Get started / Log in options'], { light: 1, cls: 'splash' }],
     ['onboard', 'Onboarding', '3 slides that explain the app.', ['Swipe-style slides + dots', 'Skip and Next'], { light: 1 }],
     ['login', 'Login', 'Private prototype login: mobile number + password, then OTP.', ['Only the approved number can log in', 'Password with show / hide', 'Clear error messages', 'OTP step next']],
     ['otp', 'OTP verify', '6-digit OTP with auto-advancing boxes.', ['Auto-advance boxes', 'Resend timer', 'Change number']],
