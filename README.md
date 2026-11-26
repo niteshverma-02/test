@@ -1,57 +1,34 @@
-# Leesa Rai — SEO · AEO · GEO Portfolio
+# Sanjh
 
-"Visibility Report" portfolio — dark-first and cinematic: warm black, ember, liquid chrome and brass (one colour per engine: SEO ember, AEO chrome, GEO brass), Anton poster type with IBM Plex. Real-time 3D with three.js / React Three Fiber: a glass magnifying lens that refracts the hero headline, chrome SEO/AEO/GEO emblems, and the evidence screenshots on a scroll-driven 3D ring with a custom shader. Built with Next.js 16, Tailwind CSS 4, GSAP + ScrollTrigger, Lenis and Motion. Without WebGL or with motion off, every 3D piece falls back to plain HTML.
+A clickable mobile app prototype that combines hotel booking with dating, so you can find a stay, meet people going to the same place on the same dates, and plan the trip together.
+
+It is plain HTML, CSS and JavaScript. There is no build step and no backend.
+
+## Run it
+
+Open `app.html` in a browser, or serve the folder:
 
 ```bash
-npm install
-npm run dev        # http://localhost:3000
-npm run build && npm start
-npm run lint
+python3 -m http.server 8080
+# then open http://localhost:8080/app.html
 ```
 
-## Pages
+- **Desktop:** shows a feature list, the app inside a phone frame, and notes for each screen. Use the ← → keys to move between screens.
+- **Phone (under 600px wide):** the app runs full-screen.
 
-| Route | What it is |
-| --- | --- |
-| `/` | Report cover (SEARCHED. ANSWERED. FOUND.), live rank-tracker demo, patient-query marquee, SEO/AEO/GEO engine panels, verified evidence (KPIs, before/after bars, exhibits on a scroll-driven 3D ring with filters and lightbox), ranked case index with cursor preview, pinned crawl→index→rank process, services index, closing CTA |
-| `/work` | All projects with filter chips (Professional / Personal / Mobile / Web …) |
-| `/work/[slug]` | Project page: problem, role, how it's built, challenges, links |
-| `/skills` | Skill cards per area + "How I work" steps |
-| `/experience` | Timeline of roles + education |
-| `/about` | Photo, intro, quote, principles, interests |
-| `/contact` | Email, location, links and a validated contact form |
+`index.html` is an earlier four-screen showcase. The full prototype is `app.html`.
 
-## Editing content
+## What's inside
 
-All content is data in `src/content/` — no component changes needed.
+46 screens across onboarding, hotel search and booking, trips, dating (swipe, match, chat, plan a trip together), local helpers (pay to unlock), premium, safety and settings.
 
-| File | What's in it |
-| --- | --- |
-| `profile.ts` | Name, tagline, email, links, resume, photo, about copy |
-| `projects.ts` | Work + personal projects. Screenshots live in `public/images/projects/`. Keep `results` to verified numbers only. |
-| `experience.ts` | Roles, education (`showEducationScores` toggles marks) |
-| `skills.ts` | Skill areas, tools |
-| `process.ts` | "How I work" steps |
+| File | Contents |
+|------|----------|
+| `app.html` | Page shell |
+| `app.css` | Styles, light and dark themes |
+| `data.js` | Icons, sample hotels, people and helpers |
+| `app.js` | Screens, navigation and interactions |
 
-Keep copy short — one idea per line. Links with `href: null` are hidden automatically.
+All data is sample data, and payments, OTP and calls are simulated. The login screen is a client-side demo gate, not real security.
 
-## Environment
-
-Copy `.env.example` to `.env.local`.
-
-- `NEXT_PUBLIC_SITE_URL` — the real domain (canonical URLs, sitemap, Open Graph).
-
-### Contact form
-
-Without a provider the form does **not** pretend to send — it opens the visitor's email app with the message filled in. To deliver directly, set one of:
-
-1. **Resend** — `RESEND_API_KEY`, `CONTACT_TO_EMAIL`, optional `CONTACT_FROM_EMAIL`.
-2. **Webhook** — `CONTACT_WEBHOOK_URL` (any endpoint accepting a JSON POST).
-
-Rebuild after changing these. `POST /api/contact` re-validates with Zod, has a honeypot and a simple per-instance rate limit.
-
-## Notes
-
-- Colour mode: `<html data-mode="light|dark">`, set before first paint from the visitor's choice or system setting. The toggle reveals the new theme in a circle from the button.
-- Motion respects `prefers-reduced-motion`; content is visible without JavaScript.
-- Work projects are internal products, described at a high level only — no internal URLs, IDs or data.
+Photos are from [Unsplash](https://unsplash.com) and are used under the Unsplash License.
